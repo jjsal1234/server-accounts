@@ -9,12 +9,12 @@
 
   <h1>Auth0 Example</h1>
 
-  <!-- Include Auth0 SDK -->
-  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.14/auth0-spa-js.production.js"></script>
-
   <!-- Auth0 configuration -->
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.14/auth0-spa-js.production.js" onload="initAuth0()"></script>
+
+  <!-- Script to initialize Auth0 and handle login -->
   <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
+    function initAuth0() {
       const auth0 = new Auth0({
         domain: 'dev-p5xugooda3gv6ei2.us.auth0.com',
         client_id: 'lQnRU4FELDtziFpGPQNTnv78ooPUaHwv',
@@ -22,11 +22,11 @@
         audience: 'https://github-api-jjsal1234.com/',
       });
 
-      async function login() {
+      window.login = async function () {
         await auth0.loginWithRedirect();
-      }
+      };
 
-      async function handleRedirectCallback() {
+      window.handleRedirectCallback = async function () {
         const result = await auth0.handleRedirectCallback();
         // Redirect or perform additional actions as needed
         if (result.appState && result.appState.targetUrl) {
@@ -34,10 +34,10 @@
         } else {
           window.location.href = '/';
         }
-      }
+      };
 
-      handleRedirectCallback();
-    });
+      window.handleRedirectCallback();
+    }
   </script>
 
   <!-- Create a login button -->
